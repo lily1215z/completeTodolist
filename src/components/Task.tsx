@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import style from '../App.module.css'
 import {EditableItem} from "./EditableItem";
 import {TaskStatuses} from "../App";
@@ -13,7 +13,7 @@ type TaskType = {
     changeTaskTitle: (newTitle: string) => void
 }
 
-export const Task: React.FC<TaskType> = ({
+export const Task: React.FC<TaskType> = React.memo(({
                                              todoListId,
                                              removeTask,
                                              taskId,
@@ -22,10 +22,11 @@ export const Task: React.FC<TaskType> = ({
                                              changeStatusTask,
                                              changeTaskTitle
                                          }) => {
+    console.log('task')
 
-    const changeStatusTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeStatusTaskHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         changeStatusTask(todoListId, taskId, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
-    }
+    },[todoListId, taskId, changeStatusTask])
 
     const styleForTasksTitle = {
         marginLeft: '5px',
@@ -57,5 +58,5 @@ export const Task: React.FC<TaskType> = ({
             }
         </>
     );
-};
+});
 

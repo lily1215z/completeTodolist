@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
-import {v1} from "uuid";
+import React, {useCallback, useEffect} from 'react';
 import {TodoList} from "./components/TodoList";
 import {UniversalInput} from "./components/UniversalInput";
 import style from './App.module.css'
-import tall from './image/tall2.png'
+// import tall from './image/tall2.png'
 import {useSelector} from "react-redux";
 import {
     addTasksTC, removeTasksTC, updateTaskTC
@@ -58,10 +57,8 @@ export type TasksType = {
 }
 
 function App() {
-    const todoListId1 = v1();
-    const todoListId2 = v1();
-    const todoListId3 = v1();
-
+    console.log('app')
+    //const todoListId1 = v1();
     // const [todolist, setTodoList] = useState<Array<TodoListType>>([
     //     {id: todoListId1, title: 'Daily affairs', filter: 'all'},
     //     {id: todoListId2, title: 'My deals on camp', filter: 'all'},
@@ -71,25 +68,7 @@ function App() {
     //  const [tasks, setTasks] = useState<TasksType>({
     //         [todoListId1]: [
     //             {id: v1(), title: 'wash up', isDone: false},
-    //             {id: v1(), title: 'brush your teeth', isDone: true},
-    //             {id: v1(), title: 'make the bed', isDone: false},
-    //             {id: v1(), title: 'read a book', isDone: false},
-    //             {id: v1(), title: 'take vitamins', isDone: false},
-    //             {id: v1(), title: 'draw', isDone: true},
-    //             {id: v1(), title: 'help mom', isDone: false},
-    //             {id: v1(), title: 'put away toys', isDone: false}
-    //         ],
-    //         [todoListId2]: [
-    //             {id: v1(), title: 'to plant a tree', isDone: false},
-    //             {id: v1(), title: 'fall in love', isDone: true},
-    //             {id: v1(), title: 'save the raccoon', isDone: false},
-    //             {id: v1(), title: 'spend the night in the forest', isDone: false}
-    //         ],
-    //         [todoListId3]: [
-    //             {id: v1(), title: 'backpack', isDone: false},
-    //             {id: v1(), title: 'food', isDone: false},
-    //             {id: v1(), title: 'things', isDone: true},
-    //             {id: v1(), title: 'myself', isDone: false},
+    //             {id: v1(), title: 'brush your teeth', isDone: true}
     //         ]
     //     }
     // )
@@ -99,37 +78,37 @@ function App() {
     // const dispatch = useDispatch();
     const dispatch = useAppDispatch();
 
-    const removeTask = function (todolistId: string, taskId:string) {
+    const removeTask = useCallback(function (todolistId: string, taskId:string) {
         dispatch(removeTasksTC( todolistId, taskId));
-    };
+    }, [dispatch])
 
-    const addTask = (todoListId: string, title: string) => {
+    const addTask = useCallback((todoListId: string, title: string) => {
       dispatch(addTasksTC(todoListId, title))
-    }
+    }, [dispatch])
 
-    const changeFilter = (todoListId: string, value: TodoListFilterType) => {
+    const changeFilter = useCallback((todoListId: string, value: TodoListFilterType) => {
         dispatch(changeFilterAC(todoListId, value))
-    }
+    },[dispatch])
 
-    const changeStatusTask = (todoListId: string, taskId: string, status: TaskStatuses) => {
+    const changeStatusTask = useCallback((todoListId: string, taskId: string, status: TaskStatuses) => {
         dispatch(updateTaskTC(todoListId, taskId, {status: status}))
-    }
+    }, [dispatch])
 
-    const removeTodoList = (todoListId: string) => {
+    const removeTodoList = useCallback((todoListId: string) => {
         dispatch(removeTodoListTC(todoListId));
-    }
+    }, [dispatch])
 
-    const addTodoList = (title: string) => {
+    const addTodoList = useCallback((title: string) => {
         dispatch(addTodoListTC(title))
-    }
+    },[dispatch])
 
-    const changeTodoListTitle = ( todoListId: string, title: string) => {
+    const changeTodoListTitle = useCallback(( todoListId: string, title: string) => {
         dispatch(changeTodolistTitleTC(todoListId, title))
-    }
+    },[dispatch])
 
-    const changeTaskTitle = ( todoListId: string, taskId: string, newTitle: string) => {
+    const changeTaskTitle = useCallback(( todoListId: string, taskId: string, newTitle: string) => {
         dispatch(updateTaskTC(todoListId, taskId, {title: newTitle}))
-    }
+    },[dispatch])
 
     useEffect(() => {
         dispatch(getTodoTC())

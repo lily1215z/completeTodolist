@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {TaskStatuses, TaskType, TodoListFilterType} from "../App";
 import {Task} from "./Task";
 import {UniversalInput} from "./UniversalInput";
 import style from '../App.module.css'
 import {EditableItem} from "./EditableItem";
-import {getTodoTC} from "../reducer/todolistReducer";
 import {useAppDispatch} from "../hooks";
 import {fetchTasksTC} from "../reducer/tasksReducer";
 
@@ -21,7 +20,7 @@ type TodoListPropsType = {
     changeTaskTitle: (title: string, todoListId: string, taskId: string) => void
 }
 
-export const TodoList: React.FC<TodoListPropsType> = ({
+export const TodoList: React.FC<TodoListPropsType> = React.memo(({
                                                           tasks,
                                                           todoListTitle,
                                                           todoListId,
@@ -33,18 +32,21 @@ export const TodoList: React.FC<TodoListPropsType> = ({
                                                           changeTodoListTitle,
                                                           changeTaskTitle
                                                       }) => {
+    console.log('todolist')
 
     const dispatch = useAppDispatch();
-    const addTaskValue = (title: string) => {
-        addTask(todoListId, title)
-    }
 
-    const onClickFilter = (filter: TodoListFilterType) => {
+    const addTaskValue = useCallback((title: string) => {
+        addTask(todoListId, title)
+    },[todoListId, addTask])
+
+    const onClickFilter = useCallback((filter: TodoListFilterType) => {
         changeFilter(todoListId, filter)
-    }
-    const changeTodoListTitleHandler = (newTitle: string) => {
+    },[todoListId, changeFilter])
+
+    const changeTodoListTitleHandler = useCallback((newTitle: string) => {
         changeTodoListTitle(todoListId, newTitle)
-    }
+    },[todoListId, changeTodoListTitle])
 
     const styleForTodolistTitle = {
         fontFamily: "'Ruslan Display', cursive",
@@ -101,5 +103,5 @@ export const TodoList: React.FC<TodoListPropsType> = ({
             </div>
         </div>
     );
-};
+});
 

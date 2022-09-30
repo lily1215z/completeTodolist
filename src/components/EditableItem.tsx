@@ -7,7 +7,7 @@ type todoListTitleType = {
     styleTitle: any              // стили
 }
 
-export const EditableItem: React.FC<todoListTitleType> = ({ titleInState, addItem, styleTitle}) => {
+export const EditableItem: React.FC<todoListTitleType> =  React.memo(({ titleInState, addItem, styleTitle}) => {
 
     const [edit, setEdit] = useState(false)
     const [value, setValue] = useState(titleInState);
@@ -16,8 +16,8 @@ export const EditableItem: React.FC<todoListTitleType> = ({ titleInState, addIte
         setEdit(false)
         addItem(value)
     }
-    // @ts-ignore
-    const onPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+
+    const onPressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode  === 13) {
             setEdit(false)
             addItem(value)
@@ -42,4 +42,4 @@ export const EditableItem: React.FC<todoListTitleType> = ({ titleInState, addIte
             }
         </>
     );
-};
+});
