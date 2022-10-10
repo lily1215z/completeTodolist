@@ -1,27 +1,33 @@
 import React, {useCallback, useEffect} from 'react';
-import {TodoList} from "./components/TodoList";
-import {UniversalInput} from "./components/UniversalInput";
+import {TodoList} from './components/TodoList';
+import {UniversalInput} from './components/UniversalInput';
 import style from './App.module.css'
 // import tall from './image/tall2.png'
-import {useSelector} from "react-redux";
+import {useSelector} from 'react-redux';
 import {
     addTasksTC, removeTasksTC, updateTaskTC
-} from "./reducer/tasksReducer";
-import {AppRootState} from "./redux/store";
-import {addTodoListTC,
+} from './reducer/tasksReducer';
+import {AppRootState} from './redux/store';
+import {
+    addTodoListTC,
     changeFilterAC, changeTodolistTitleTC,
-    getTodoTC,removeTodoListTC
-} from "./reducer/todolistReducer"
+    getTodoTC, removeTodoListTC, TodolistDomainType
+} from './reducer/todolistReducer'
 
-import {useAppDispatch} from "./hooks";
+import {useAppDispatch} from './hooks';
+import {ErrorSnackbar} from './components/ЕrrorSnackbar';
+import {RequestStatusType} from './reducer/appReducer';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export type TodoListFilterType = 'all' | 'completed' | 'active';
 
-export type TodoListType = {
-    id: string,
-    title: string,
-    filter: TodoListFilterType
-}
+// export type TodoListType = {
+//     id: string,
+//     title: string,
+//     filter: TodoListFilterType,
+//     // entityStatus: RequestStatusType
+// }
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
@@ -36,6 +42,7 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
+
 export type TaskType = {
     // id: string,
     // title: string,
@@ -57,7 +64,6 @@ export type TasksType = {
 }
 
 function App() {
-    console.log('app')
     //const todoListId1 = v1();
     // const [todolist, setTodoList] = useState<Array<TodoListType>>([
     //     {id: todoListId1, title: 'Daily affairs', filter: 'all'},
@@ -73,22 +79,23 @@ function App() {
     //     }
     // )
     const tasks = useSelector<AppRootState, TasksType>(state => state.tasks)
-    const todolist = useSelector<AppRootState, Array<TodoListType>>(state => state.todolists)
+    const todolist = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists)
+    const status = useSelector<AppRootState, RequestStatusType>(state => state.app.status)
 
     // const dispatch = useDispatch();
     const dispatch = useAppDispatch();
 
-    const removeTask = useCallback(function (todolistId: string, taskId:string) {
-        dispatch(removeTasksTC( todolistId, taskId));
+    const removeTask = useCallback(function (todolistId: string, taskId: string) {
+        dispatch(removeTasksTC(todolistId, taskId));
     }, [dispatch])
 
     const addTask = useCallback((todoListId: string, title: string) => {
-      dispatch(addTasksTC(todoListId, title))
+        dispatch(addTasksTC(todoListId, title))
     }, [dispatch])
 
     const changeFilter = useCallback((todoListId: string, value: TodoListFilterType) => {
         dispatch(changeFilterAC(todoListId, value))
-    },[dispatch])
+    }, [dispatch])
 
     const changeStatusTask = useCallback((todoListId: string, taskId: string, status: TaskStatuses) => {
         dispatch(updateTaskTC(todoListId, taskId, {status: status}))
@@ -100,26 +107,29 @@ function App() {
 
     const addTodoList = useCallback((title: string) => {
         dispatch(addTodoListTC(title))
-    },[dispatch])
+    }, [dispatch])
 
-    const changeTodoListTitle = useCallback(( todoListId: string, title: string) => {
+    const changeTodoListTitle = useCallback((todoListId: string, title: string) => {
         dispatch(changeTodolistTitleTC(todoListId, title))
-    },[dispatch])
+    }, [dispatch])
 
-    const changeTaskTitle = useCallback(( todoListId: string, taskId: string, newTitle: string) => {
+    const changeTaskTitle = useCallback((todoListId: string, taskId: string, newTitle: string) => {
         dispatch(updateTaskTC(todoListId, taskId, {title: newTitle}))
-    },[dispatch])
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(getTodoTC())
-    },[])
+    }, [])
 
     return (
+        <>
+        {status === 'loading' && <div className={style.progress}><LinearProgress color="primary" /></div>}
         <div className={style.wrapper}>
+
             <header className={style.header}>
                 <h1 className={style.title}>My first things...</h1>
             </header>
-
+            {/*{status === 'loading' && <div className={style.progress}><LinearProgress color="primary" /></div>}*/}
             <main className={style.main}>
                 {/*<div className={style.tall}>*/}
                 {/*    <img width={480} src={tall} />*/}
@@ -142,17 +152,18 @@ function App() {
 
                                 let tasksForTodoList = allTasksTodoLists
 
-                                if (i.filter === "active") {
+                                if (i.filter === 'active') {
                                     tasksForTodoList = allTasksTodoLists.filter(i => i.status === 0)
                                 }
-                                if (i.filter === "completed") {
+                                if (i.filter === 'completed') {
                                     tasksForTodoList = allTasksTodoLists.filter(i => i.status === 2)
                                 }
                                 return <TodoList
                                     key={i.id}
-                                    todoListId={i.id}
+                                    todolist={i}
+                                    // todoListId={i.id}
                                     tasks={tasksForTodoList}
-                                    todoListTitle={i.title}
+                                    // todoListTitle={i.title}
                                     removeTask={removeTask}
                                     addTask={addTask}
                                     changeFilter={changeFilter}
@@ -164,7 +175,7 @@ function App() {
                             })
                         }
                     </div>
-
+                    <ErrorSnackbar />
                 </div>
 
             </main>
@@ -173,7 +184,9 @@ function App() {
                 Not Copyright 2022 • My first things... Webflow cloneable. All rights reserved
             </footer>
         </div>
+        </>
     );
+
 }
 
 export default App;

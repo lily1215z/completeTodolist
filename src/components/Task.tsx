@@ -2,6 +2,7 @@ import React, {ChangeEvent, useCallback} from 'react';
 import style from '../App.module.css'
 import {EditableItem} from "./EditableItem";
 import {TaskStatuses} from "../App";
+import {RequestStatusType} from '../reducer/appReducer';
 
 type TaskType = {
     todoListId: string
@@ -11,6 +12,7 @@ type TaskType = {
     title: string
     changeStatusTask: (todoListId: string, taskId: string, status: TaskStatuses) => void
     changeTaskTitle: (newTitle: string) => void
+    entityStatus?: RequestStatusType
 }
 
 export const Task: React.FC<TaskType> = React.memo(({
@@ -20,9 +22,9 @@ export const Task: React.FC<TaskType> = React.memo(({
                                              check,
                                              title,
                                              changeStatusTask,
-                                             changeTaskTitle
+                                             changeTaskTitle,
+                                                        entityStatus
                                          }) => {
-    console.log('task')
 
     const changeStatusTaskHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         changeStatusTask(todoListId, taskId, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
@@ -34,11 +36,14 @@ export const Task: React.FC<TaskType> = React.memo(({
         fontSize: '18px',
     }
 
+    const disabled = entityStatus && entityStatus === 'loading'
+
     return (
         <>
             {
                 <li className={style.item}>
                     <input
+                        disabled={disabled}
                         checked={check === 2}
                         type={'checkbox'}
                         onChange={changeStatusTaskHandler}
@@ -53,7 +58,7 @@ export const Task: React.FC<TaskType> = React.memo(({
                         {/*<span className={style.item_title}>{title}</span>*/}
                     </div>
 
-                    <button className={style.item_btn} onClick={() => removeTask( todoListId, taskId)}></button>
+                    <button className={style.item_btn} onClick={() => removeTask( todoListId, taskId)} disabled={disabled}></button>
                 </li>
             }
         </>

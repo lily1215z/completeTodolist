@@ -1,8 +1,11 @@
 import {TaskPriorities, TaskStatuses, TasksType, TaskType} from "../App";
-import {addTodoListAC, removeTodoListAC, setTodoAC} from "./todolistReducer";
+import {addTodoListAC, disabledOneTodolistAC, removeTodoListAC, setTodoAC} from './todolistReducer';
 import {Dispatch} from "redux";
 import {todolistAPI, UpdateTaskModelType} from "../api/todolist-api";
 import {AppRootState, AppThunk} from "../redux/store";
+import {setAppStatusAC} from './appReducer';
+import {AxiosError} from 'axios';
+import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 
 const initState: TasksType = {}
 
@@ -148,26 +151,54 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string): SetTasks
 }
 export const fetchTasksTC = (todolistId: string) => {
     return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         todolistAPI.getTasks(todolistId)
             .then((res) => {
-                dispatch(setTasksAC(res.data.items, todolistId))
+                if(res.data.items) {
+                    dispatch(setTasksAC(res.data.items, todolistId))
+                    dispatch(setAppStatusAC('sucssesed'))
+                } else {
+                    handleServerAppError(res.data.items, dispatch)
+                }
+            })
+            .catch((e: AxiosError) => {
+                handleServerNetworkError(e, dispatch)
             })
     }
 }
 
 export const removeTasksTC = (todolistId: string, taskId: string): AppThunk => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    dispatch(disabledOneTodolistAC(todolistId, 'loading'))
     todolistAPI.removeTask(todolistId, taskId)
         .then((res) => {
             dispatch(removeTasksAC(todolistId, taskId))
+            dispatch(setAppStatusAC('sucssesed'))
+            dispatch(disabledOneTodolistAC(todolistId, 'sucssesed'))
+        })
+        .catch((e: AxiosError) => {
+            handleServerNetworkError(e, dispatch)
         })
 }
 
 export const addTasksTC = (todolistId: string, title: string): AppThunk => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    dispatch(disabledOneTodolistAC(todolistId, 'loading'))
     todolistAPI.createTask(todolistId, title)
         .then((res) => {
-            dispatch(addTasksAC(todolistId, res.data.data.item))
+            if(res.data.resultCode === 0) {
+                dispatch(addTasksAC(todolistId, res.data.data.item))
+                dispatch(setAppStatusAC('sucssesed'))
+                dispatch(disabledOneTodolistAC(todolistId, 'sucssesed'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch((e: AxiosError) => {
+            handleServerNetworkError(e, dispatch)
         })
 }
+
 
 export type UpdateDomainTaskModelType = {
     title?: string
@@ -196,9 +227,16 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             //то что прийдет с UA его и перезатри а остальные оставим как есть
             ...domainModel
         }
+        dispatch(setAppStatusAC('loading'))
+        dispatch(disabledOneTodolistAC(todolistId, 'loading'))
         todolistAPI.updateTask(todolistId, taskId, apiModel)
             .then(() => {
                 dispatch(updateTaskAC(taskId, domainModel, todolistId))
+                dispatch(disabledOneTodolistAC(todolistId, 'sucssesed'))
+                dispatch(setAppStatusAC('sucssesed'))
+            })
+            .catch((e: AxiosError) => {
+                handleServerNetworkError(e, dispatch)
             })
     }
 }

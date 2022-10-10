@@ -1,16 +1,17 @@
 import React, {useCallback, useEffect} from 'react';
-import {TaskStatuses, TaskType, TodoListFilterType} from "../App";
-import {Task} from "./Task";
-import {UniversalInput} from "./UniversalInput";
+import {TaskStatuses, TaskType, TodoListFilterType} from '../App';
+import {Task} from './Task';
+import {UniversalInput} from './UniversalInput';
 import style from '../App.module.css'
-import {EditableItem} from "./EditableItem";
-import {useAppDispatch} from "../hooks";
-import {fetchTasksTC} from "../reducer/tasksReducer";
+import {EditableItem} from './EditableItem';
+import {useAppDispatch} from '../hooks';
+import {fetchTasksTC} from '../reducer/tasksReducer';
+import {TodolistDomainType} from '../reducer/todolistReducer';
 
 type TodoListPropsType = {
-    todoListId: string
+    // todoListId: string
     tasks: Array<TaskType>
-    todoListTitle: string
+    // todoListTitle: string
     removeTask: (taskId: string, todoListId: string) => void
     addTask: (todoListId: string, title: string) => void
     changeFilter: (todoListId: string, filter: TodoListFilterType) => void
@@ -18,58 +19,57 @@ type TodoListPropsType = {
     removeTodoList: (todoListId: string) => void
     changeTodoListTitle: (title: string, todoListId: string) => void
     changeTaskTitle: (title: string, todoListId: string, taskId: string) => void
+    todolist: TodolistDomainType
 }
 
 export const TodoList: React.FC<TodoListPropsType> = React.memo(({
-                                                          tasks,
-                                                          todoListTitle,
-                                                          todoListId,
-                                                          removeTask,
-                                                          addTask,
-                                                          changeFilter,
-                                                          changeStatusTask,
-                                                          removeTodoList,
-                                                          changeTodoListTitle,
-                                                          changeTaskTitle
-                                                      }) => {
-    console.log('todolist')
-
+                                                                     tasks,
+                                                                     todolist,
+                                                                     removeTask,
+                                                                     addTask,
+                                                                     changeFilter,
+                                                                     changeStatusTask,
+                                                                     removeTodoList,
+                                                                     changeTodoListTitle,
+                                                                     changeTaskTitle
+                                                                 }) => {
     const dispatch = useAppDispatch();
 
     const addTaskValue = useCallback((title: string) => {
-        addTask(todoListId, title)
-    },[todoListId, addTask])
+        addTask(todolist.id, title)
+    }, [todolist.id, addTask])
 
     const onClickFilter = useCallback((filter: TodoListFilterType) => {
-        changeFilter(todoListId, filter)
-    },[todoListId, changeFilter])
+        changeFilter(todolist.id, filter)
+    }, [todolist.id, changeFilter])
 
     const changeTodoListTitleHandler = useCallback((newTitle: string) => {
-        changeTodoListTitle(todoListId, newTitle)
-    },[todoListId, changeTodoListTitle])
+        changeTodoListTitle(todolist.id, newTitle)
+    }, [todolist.id, changeTodoListTitle])
 
     const styleForTodolistTitle = {
-        fontFamily: "'Ruslan Display', cursive",
+        fontFamily: '\'Ruslan Display\', cursive',
         margin: 0,
         fontSize: '24px'
     }
 
     useEffect(() => {
-        dispatch(fetchTasksTC(todoListId))
+        dispatch(fetchTasksTC(todolist.id))
     }, [])
 
     return (
         <div className={style.card}>
             <EditableItem
                 addItem={changeTodoListTitleHandler}
-                titleInState={todoListTitle}
+                titleInState={todolist.title}
                 styleTitle={styleForTodolistTitle}
             />
             {/*<h2 className={style.title_todolist}>{todoListTitle}</h2>*/}
 
-            <button className={style.btn_close} onClick={() => removeTodoList(todoListId)}>x</button>
+            <button className={style.btn_close} disabled={todolist.entityStatus === 'loading'} onClick={() => removeTodoList(todolist.id)}>x</button>
             <div className={style.card_inputbox}>
                 <UniversalInput
+                    entityStatus={todolist.entityStatus}
                     placeholder={'write your case'}
                     addItem={addTaskValue}
                 />
@@ -79,18 +79,19 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
                 {
                     tasks.map(i => {
                         const changeTaskTitleHandler = (newValue: string) => {
-                            changeTaskTitle(todoListId, i.id, newValue)
+                            changeTaskTitle(todolist.id, i.id, newValue)
                         }
 
                         return <Task
                             key={i.id}
-                            todoListId={todoListId}
+                            todoListId={todolist.id}
                             removeTask={removeTask}
                             changeStatusTask={changeStatusTask}
                             taskId={i.id}
                             check={i.status}
                             title={i.title}
                             changeTaskTitle={changeTaskTitleHandler}
+                            entityStatus={todolist.entityStatus}
                         />
                     })
 
