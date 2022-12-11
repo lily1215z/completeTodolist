@@ -1,4 +1,5 @@
 export type RequestStatusType = 'idle' | 'loading' | 'sucssesed' | 'failed';
+
 const initState = {
     status: 'loading' as RequestStatusType,
     error: null as null | string

@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect} from 'react';
-import {TaskStatuses, TaskType, TodoListFilterType} from '../App';
 import {Task} from './Task';
 import {UniversalInput} from './UniversalInput';
 import style from '../App.module.css'
@@ -7,6 +6,7 @@ import {EditableItem} from './EditableItem';
 import {useAppDispatch} from '../hooks';
 import {fetchTasksTC} from '../reducer/tasksReducer';
 import {TodolistDomainType} from '../reducer/todolistReducer';
+import {TaskStatuses, TaskType, TodoListFilterType} from './TodolistMain';
 
 type TodoListPropsType = {
     // todoListId: string

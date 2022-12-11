@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import style from '../App.module.css'
 import {EditableItem} from "./EditableItem";
-import {TaskStatuses} from "../App";
 import {RequestStatusType} from '../reducer/appReducer';
+import {TaskStatuses} from './TodolistMain';
 
 type TaskType = {
     todoListId: string

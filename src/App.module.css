@@ -28,12 +28,20 @@ a {
 }
 
 body {
-    background-image: url(/src/image/01.jpg);
+    background-image: url(/src/image/bg-body.jpg);
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% auto;
+    background-color: #d1e278;
+    position: relative;
+}
 
-    /*background: linear-gradient(90deg, rgba(170,165,255,1) 0%, rgba(151,151,252,1) 35%, rgba(200,246,255,1) 100%);*/
+body::after {
+    content: url(/src/image/bg-text.png);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 .wrapper {
@@ -41,6 +49,10 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 0 10px;
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .header {
@@ -67,6 +79,7 @@ body {
     display: flex;
     justify-content: space-between;
     /*min-height: calc(100vh - 145px);*/
+    flex: 1;
 }
 
 .plan {
@@ -120,9 +133,11 @@ body {
     width: 200px;
     /*border: 1px solid red;*/
 }
+
 .input:disabled {
     border: 1px solid grey;
 }
+
 /*.title_todolist {*/
 /*    font-family: 'Ruslan Display', cursive;*/
 /*}*/
@@ -179,11 +194,13 @@ body {
     font-family: 'Ruslan Display', cursive;
     color: #082085;
 }
+
 .btn_close:disabled,
 .btn_add:disabled {
     cursor: default;
     color: #808080;
 }
+
 .item-box {
     margin-bottom: 18px;
     margin-left: 30px;
@@ -235,6 +252,7 @@ body {
     position: relative;
     background-color: transparent;
 }
+
 .item_btn:disabled:before {
     content: url(/src/image/delete-grey.png);
     cursor: default;
@@ -300,4 +318,116 @@ body {
 .progress {
     position: relative;
     top: 162px;
+}
+
+.login_box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nik_name,
+.logout {
+    padding: 3px 5px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.nik_name {
+    padding: 2px 5px;
+    background-color: #ffdcba;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.nik_name::after {
+    content: url(/src/image/nikname.png);
+    position: absolute;
+    top: -67px;
+    left: -133px;
+    z-index: -1;
+}
+
+.logout {
+    margin-left: 30px;
+    position: relative;
+}
+
+.logout::after {
+    content: url(/src/image/logout.png);
+    position: absolute;
+    top: -80px;
+    left: -9px;
+    z-index: -1;
+}
+
+/*login*/
+.login_title {
+    display: inline-block;
+    /*display: block;*/
+    /*text-align: right;*/
+    color: #082085;
+    font-weight: 900;
+    margin-left: 10px;
+    position: relative;
+    top: 2px;
+    background-color: white;
+    box-shadow: 2px 2px 14px 3px #2448e1;
+    border-radius: 5px;
+    z-index: -1;
+    padding: 2px 10px 10px;
+}
+
+.login_input {
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 14px 3px #2448e1;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    outline: transparent;
+    color: #082085;
+}
+
+.login_checkbox {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.form_box {
+
+}
+
+.login_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    /*background-color: rgba(116, 113, 213, 0.9);*/
+    background-color: rgb(169, 167, 238);
+    z-index: 1;
+}
+
+.login_block {
+    box-shadow: 2px 2px 14px 3px #2448e1;
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.btn_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn_block button {
+    width: 100%;
 }

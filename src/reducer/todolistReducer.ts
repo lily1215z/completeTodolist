@@ -1,10 +1,11 @@
-import {TodoListFilterType} from '../App';
+
 import {todolistAPI, TodolistType} from '../api/todolist-api';
 import {Dispatch} from 'redux';
 import {AppThunk} from '../redux/store';
 import {RequestStatusType, setAppStatusAC} from './appReducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
+import {TodoListFilterType} from '../components/TodolistMain';
 
 const initState: Array<TodolistDomainType> = []
 

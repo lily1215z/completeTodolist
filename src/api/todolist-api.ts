@@ -1,6 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {TaskPriorities, TaskStatuses, TaskType} from "../App";
-import {removeTodoListTC} from "../reducer/todolistReducer";
+import {TaskPriorities, TaskStatuses, TaskType} from '../components/TodolistMain';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -39,6 +38,27 @@ export const todolistAPI = {
     }
 }
 
+export const authAPI = {
+    login(dataLoginForm: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>('/auth/login', dataLoginForm)
+    }
+}
+
+//type
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: D
+}
+
 export type UpdateTaskModelType = {
     title: string
     description: string
@@ -47,12 +67,7 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 }
-export type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors: Array<string>
-    data: D
-}
+
 export type TodolistType = {
     addedDate: string
     id: string
