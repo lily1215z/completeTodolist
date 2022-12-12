@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import style from '../App.module.css';
 import {UniversalInput} from './UniversalInput';
 import {TodoList} from './TodoList';
@@ -7,13 +7,14 @@ import {AppRootState} from '../redux/store';
 import {
     addTodoListTC,
     changeFilterAC,
-    changeTodolistTitleTC,
+    changeTodolistTitleTC, getTodoTC,
     removeTodoListTC,
     TodolistDomainType
 } from '../reducer/todolistReducer';
 import {useAppDispatch} from '../hooks';
 import {addTasksTC, removeTasksTC, updateTaskTC} from '../reducer/tasksReducer';
 import {useSelector} from 'react-redux';
+import {Navigate} from 'react-router-dom';
 
 export type TodoListFilterType = 'all' | 'completed' | 'active';
 
@@ -53,12 +54,19 @@ export type TasksType = {
 }
 
 export const TodolistMain = () => {
-
+    const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn);
     const tasks = useSelector<AppRootState, TasksType>(state => state.tasks)
     const todolist = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists)
 
 // const dispatch = useDispatch();
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        // if (!isLoggedIn) {
+        //     return;
+        // }
+        dispatch(getTodoTC())
+    }, [])
 
     const removeTask = useCallback(function (todolistId: string, taskId: string) {
         dispatch(removeTasksTC(todolistId, taskId));
@@ -92,6 +100,9 @@ export const TodolistMain = () => {
         dispatch(updateTaskTC(todoListId, taskId, {title: newTitle}))
     }, [dispatch])
 
+    if(!isLoggedIn) {
+        return <Navigate to={'/login'} />
+    }
 
     return (
         <main className={style.main}>

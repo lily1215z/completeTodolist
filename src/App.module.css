@@ -361,7 +361,7 @@ body::after {
     z-index: -1;
 }
 
-/*login*/
+/* styles for login*/
 .login_title {
     display: inline-block;
     /*display: block;*/
@@ -378,11 +378,21 @@ body::after {
     padding: 2px 10px 10px;
 }
 
+.login_formtitle {
+    font-family: 'Ruslan Display', cursive;
+    color: #05103b;
+    font-size: 24px;
+}
+
+.login_input_block {
+    position: relative;
+}
+
 .login_input {
     display: block;
     width: 100%;
     padding: 10px 5px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     box-shadow: 2px 2px 14px 3px #2448e1;
     border: none;
     border-radius: 5px;
@@ -391,22 +401,12 @@ body::after {
     color: #082085;
 }
 
-.login_checkbox {
-    display: block;
-    margin-bottom: 20px;
-}
-
-.form_box {
-
-}
-
 .login_wrapper {
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    /*background-color: rgba(116, 113, 213, 0.9);*/
     background-color: rgb(169, 167, 238);
     z-index: 1;
 }
@@ -415,19 +415,64 @@ body::after {
     box-shadow: 2px 2px 14px 3px #2448e1;
     border-radius: 5px;
     padding: 20px;
-    max-width: 300px;
+    max-width: 350px;
     width: 100%;
     margin: 0 auto;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 5;
+    background-color: rgb(169, 167, 238);
 }
+
 .btn_block {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .btn_block button {
     width: 100%;
 }
+
+/*styles for checkbox in Login form*/
+.login_checkbox {
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+}
+.login_checkbox input[type="checkbox"] {
+    display: none;
+}
+.login_checkbox_label {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: 2px 2px 14px 3px #2448e1;
+    width: 30px;
+    height: 30px;
+}
+.login_checkbox input:checked + .login_checkbox_label::after {
+    content: url(/src/image/checkbox.png);
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+}
+
+
+.login_error {
+    color: #ff0000;
+    position: absolute;
+    bottom: -17px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.login_input_error {
+    border: 1px solid red;
+}
+

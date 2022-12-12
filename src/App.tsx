@@ -2,9 +2,8 @@ import React, {useEffect} from 'react';
 import style from './App.module.css'
 import {useSelector} from 'react-redux';
 import {AppRootState} from './redux/store';
-import {getTodoTC} from './reducer/todolistReducer'
 import {useAppDispatch} from './hooks';
-import {RequestStatusType} from './reducer/appReducer';
+import {initializeAppTC, RequestStatusType} from './reducer/appReducer';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
@@ -13,7 +12,7 @@ import {Login} from './components/Login';
 import {TodolistMain} from './components/TodolistMain';
 
 
-function App() {
+function App( ) {
     //const todoListId1 = v1();
     // const [todolist, setTodoList] = useState<Array<TodoListType>>([
     //     {id: todoListId1, title: 'Daily affairs', filter: 'all'},
@@ -32,7 +31,8 @@ function App() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getTodoTC())
+        // dispatch(getTodoTC())
+        dispatch(initializeAppTC())
     }, [])
 
     return (
@@ -42,12 +42,10 @@ function App() {
 
                 <Header/>
 
-                <TodolistMain/>
-
-                <Login/>
+                {/*<Login/>*/}
 
                 <Routes>
-                    <Route path={'/'} element={<TodolistMain/>}/>
+                    <Route path={'/'} element={<TodolistMain />}/>
                     <Route path={'/login'} element={<Login/>}/>
 
                     <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
