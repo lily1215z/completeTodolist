@@ -1,10 +1,9 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {Task} from './Task';
 import {UniversalInput} from './UniversalInput';
-import style from '../App.module.css'
+import style from '../App.module.scss'
 import {EditableItem} from './EditableItem';
 import {useAppDispatch} from '../hooks';
-import {fetchTasksTC} from '../reducer/tasksReducer';
 import {TodolistDomainType} from '../reducer/todolistReducer';
 import {TaskStatuses, TaskType, TodoListFilterType} from './TodolistMain';
 
@@ -20,9 +19,11 @@ type TodoListPropsType = {
     changeTodoListTitle: (title: string, todoListId: string) => void
     changeTaskTitle: (title: string, todoListId: string, taskId: string) => void
     todolist: TodolistDomainType
+    demo?: boolean
 }
 
 export const TodoList: React.FC<TodoListPropsType> = React.memo(({
+                                                                     demo = false,
                                                                      tasks,
                                                                      todolist,
                                                                      removeTask,
@@ -33,7 +34,7 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
                                                                      changeTodoListTitle,
                                                                      changeTaskTitle
                                                                  }) => {
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
     const addTaskValue = useCallback((title: string) => {
         addTask(todolist.id, title)
@@ -52,13 +53,13 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
         margin: 0,
         fontSize: '24px'
     }
-
-    useEffect(() => {
-            // if (demo) {
-            //     return
-            // }
-        dispatch(fetchTasksTC(todolist.id))
-    }, [])
+    //
+    // useEffect(() => {
+    //         // if (demo) {
+    //         //     return
+    //         // }
+    //     dispatch(fetchTasksTC(todolist.id))
+    // }, [])
 
     return (
         <div className={style.card}>

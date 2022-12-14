@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
-import style from '../App.module.css'
+import style from '../App.module.scss'
 import {RequestStatusType} from '../reducer/appReducer';
 
 type UniversalInputType = {

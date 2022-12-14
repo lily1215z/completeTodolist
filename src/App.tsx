@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import style from './App.module.css'
+import style from './App.module.scss'
 import {useSelector} from 'react-redux';
 import {AppRootState} from './redux/store';
 import {useAppDispatch} from './hooks';
@@ -7,12 +7,17 @@ import {initializeAppTC, RequestStatusType} from './reducer/appReducer';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from './components/Login';
 import {TodolistMain} from './components/TodolistMain';
+import {LoaderMain} from './components/LoaderMain';
+import {NotFound} from './components/404';
 
+type PropsType = {
+    demo?: boolean
+}
 
-function App( ) {
+function App({demo = false}: PropsType) {
     //const todoListId1 = v1();
     // const [todolist, setTodoList] = useState<Array<TodoListType>>([
     //     {id: todoListId1, title: 'Daily affairs', filter: 'all'},
@@ -28,12 +33,16 @@ function App( ) {
     // )
 
     const status = useSelector<AppRootState, RequestStatusType>(state => state.app.status)
+    const isInitialized = useSelector<AppRootState, boolean>(state => state.app.isInitialized)
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        // dispatch(getTodoTC())
-        dispatch(initializeAppTC())
+        dispatch(initializeAppTC()).then()
     }, [])
+
+    if (!isInitialized) {
+        return <LoaderMain />
+    }
 
     return (
         <>
@@ -42,14 +51,12 @@ function App( ) {
 
                 <Header/>
 
-                {/*<Login/>*/}
-
                 <Routes>
-                    <Route path={'/'} element={<TodolistMain />}/>
+                    <Route path={'/'} element={<TodolistMain demo={demo}/>}/>
                     <Route path={'/login'} element={<Login/>}/>
 
-                    <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>}/>
-                    {/*<Route path="*" element={<Navigate to="/404"/>}/>*/}
+                    <Route path="/404" element={<NotFound />}/>
+                    <Route path="*" element={<Navigate to="/404"/>}/>
                 </Routes>
 
                 <Footer/>

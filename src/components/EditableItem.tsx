@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import style from "../App.module.css";
+import style from "../App.module.scss";
 
 type todoListTitleType = {
     titleInState: string        //значение кот уже изменилось в стейте

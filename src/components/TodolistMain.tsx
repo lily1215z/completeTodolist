@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import style from '../App.module.css';
+import style from '../App.module.scss';
 import {UniversalInput} from './UniversalInput';
 import {TodoList} from './TodoList';
 import {ErrorSnackbar} from './ЕrrorSnackbar';
@@ -53,7 +53,7 @@ export type TasksType = {
     [key: string]: Array<TaskType>
 }
 
-export const TodolistMain = () => {
+export const TodolistMain = ({demo = false}) => {
     const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn);
     const tasks = useSelector<AppRootState, TasksType>(state => state.tasks)
     const todolist = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists)
@@ -62,9 +62,6 @@ export const TodolistMain = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        // if (!isLoggedIn) {
-        //     return;
-        // }
         dispatch(getTodoTC())
     }, [])
 
@@ -106,9 +103,6 @@ export const TodolistMain = () => {
 
     return (
         <main className={style.main}>
-            {/*<div className={style.tall}>*/}
-            {/*    <img width={480} src={tall} />*/}
-            {/*</div>*/}
             <div className={style.plan}>
                 <div className={style.plan_add}>
                     <h2 className={style.plan_title}>My plans</h2>
@@ -146,13 +140,15 @@ export const TodolistMain = () => {
                                 removeTodoList={removeTodoList}
                                 changeTodoListTitle={changeTodoListTitle}
                                 changeTaskTitle={changeTaskTitle}
+                                demo={demo}
                             />
                         })
                     }
                 </div>
-                <ErrorSnackbar/>
-            </div>
 
+                <ErrorSnackbar/>
+
+            </div>
         </main>
     );
 };

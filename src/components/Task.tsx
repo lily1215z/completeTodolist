@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useCallback} from 'react';
-import style from '../App.module.css'
+import style from '../App.module.scss'
 import {EditableItem} from "./EditableItem";
 import {RequestStatusType} from '../reducer/appReducer';
 import {TaskStatuses} from './TodolistMain';
