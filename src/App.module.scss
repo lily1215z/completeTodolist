@@ -130,6 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 30px 10px 10px 10px;
+  background-color: $bgLight400;
 
   &_box {
     @include flex(space-around);
@@ -145,13 +146,15 @@ body {
   padding: 7px 5px;
   outline: transparent;
   border: transparent;
-  background-color: transparent;
+  //background-color: transparent;
   border-radius: 3px;
   box-shadow: 2px 2px 14px 3px $boxShadow;
   margin-right: 15px;
   position: relative;
   z-index: 1;
   width: 200px;
+  background-color: $bgLight400;
+
   @media screen and (max-width: 470px) {
     width: 100%;
   }
@@ -238,10 +241,12 @@ body {
 .item_input {
   &:before {
     @include after($pig, -9px, -30px);
+    //@include after($pig, -9px, -32px);
   }
 
   &:after {
-    @include after($check, 4px, 3px);
+    //@include after($check, 4px, 3px);
+    @include after($check, 4px, 5px);
     background-color: $bgLight200;
   }
 }
@@ -252,11 +257,12 @@ body {
   }
 
   &:after {
-    @include after('', 6px, 3px);
-    width: 14px;
-    height: 14px;
+    @include after('', 5px, 4px);
+    width: 17px;
+    height: 17px;
     border: 2px solid $active;
     border-radius: 3px;
+    background-color: $bgLight;
   }
 }
 
@@ -313,6 +319,7 @@ body {
   font-size: 14px;
   margin-top: 30px;
   min-height: 50px;
+  text-align: center;
 }
 
 .progress {
@@ -329,7 +336,7 @@ body {
 }
 
 .nik_name {
-  padding: 2px 5px;
+  padding: 1px 7px;
   background-color: $bgLight300;
   position: relative;
   border: 1px solid $dark;
