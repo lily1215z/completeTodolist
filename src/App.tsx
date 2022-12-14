@@ -55,8 +55,8 @@ function App({demo = false}: PropsType) {
                     <Route path={'/'} element={<TodolistMain demo={demo}/>}/>
                     <Route path={'/login'} element={<Login/>}/>
 
-                    <Route path="/404" element={<NotFound />}/>
-                    <Route path="*" element={<Navigate to="/404"/>}/>
+                    <Route path="404" element={<NotFound />}/>
+                    <Route path="*" element={<Navigate to="404"/>}/>
                 </Routes>
 
                 <Footer/>
