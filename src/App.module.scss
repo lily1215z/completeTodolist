@@ -246,7 +246,7 @@ body {
 
   &:after {
     //@include after($check, 4px, 3px);
-    @include after($check, 4px, 5px);
+    @include after($check, 4px, 4px);
     background-color: $bgLight200;
   }
 }
@@ -257,7 +257,7 @@ body {
   }
 
   &:after {
-    @include after('', 5px, 4px);
+    @include after('', 4px, 4px);
     width: 17px;
     height: 17px;
     border: 2px solid $active;
