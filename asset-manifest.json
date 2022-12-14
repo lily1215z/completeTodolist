@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/completeTodolist/static/css/main.f3592e1c.css",
+    "main.css": "/completeTodolist/static/css/main.c05ef69e.css",
     "main.js": "/completeTodolist/static/js/main.e87ef0f0.js",
     "static/js/787.48a35b23.chunk.js": "/completeTodolist/static/js/787.48a35b23.chunk.js",
     "static/media/bg-body.jpg": "/completeTodolist/static/media/bg-body.fdfbb1463ade7602c512.jpg",
@@ -12,12 +12,12 @@
     "static/media/nikname-small.png": "/completeTodolist/static/media/nikname-small.6389a51457a4827f38db.png",
     "static/media/bg-text.png": "/completeTodolist/static/media/bg-text.0414187445e9e7113118.png",
     "index.html": "/completeTodolist/index.html",
-    "main.f3592e1c.css.map": "/completeTodolist/static/css/main.f3592e1c.css.map",
+    "main.c05ef69e.css.map": "/completeTodolist/static/css/main.c05ef69e.css.map",
     "main.e87ef0f0.js.map": "/completeTodolist/static/js/main.e87ef0f0.js.map",
     "787.48a35b23.chunk.js.map": "/completeTodolist/static/js/787.48a35b23.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f3592e1c.css",
+    "static/css/main.c05ef69e.css",
     "static/js/main.e87ef0f0.js"
   ]
 }
