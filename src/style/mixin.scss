@@ -17,7 +17,7 @@
 }
 
 @mixin wrapper($position) {
-  position: absolute;
+  position: $position;
   top: 0;
   left: 0;
   bottom: 0;

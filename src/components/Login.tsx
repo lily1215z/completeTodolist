@@ -15,7 +15,7 @@ interface FormikErrorType {
 }
 
 export const Login: React.FC<{}> = () => {
-const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn);
+    const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn);
 
     const dispatch = useAppDispatch();
 
@@ -50,14 +50,26 @@ const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLogg
         },
     });
 
-    if(isLoggedIn) {
-        return <Navigate to={'/'} />
+    if (isLoggedIn) {
+        return <Navigate to={'/'}/>
     }
 
     return (
         <div className={style.login_wrapper}>
-            <Particle />
+            <Particle/>
             <div className={style.login_block}>
+                <div className={style.login_info}>
+                    Please enter this email and password:
+                    <div className={style.login_info_box}>
+                        <div className={style.login_info_data}>
+                            <div className={style.login_info_span}>Email:</div> <span>free@samuraijs.com</span>
+                        </div>
+                        <div className={style.login_info_data}>
+                            <div className={style.login_info_span}>Password:</div> <span>free</span>
+                        </div>
+                    </div>
+
+                </div>
                 <h2 className={style.login_formtitle}>Enter in my Todolist</h2>
 
                 <form onSubmit={formik.handleSubmit}>
@@ -67,9 +79,11 @@ const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLogg
                             id="email"
                             className={`${style.login_input} ${formik.touched.email && formik.errors.email ? style.login_input_error : ''}`}
                             type={'email'}
+                            placeholder={'free@samuraijs.com'}
                             {...formik.getFieldProps('email')}
                         />
-                        {formik.touched.email && formik.errors.email ? <div className={style.login_error}>{formik.errors.email}</div> : null}
+                        {formik.touched.email && formik.errors.email ?
+                            <div className={style.login_error}>{formik.errors.email}</div> : null}
                     </div>
 
                     <div className={style.login_input_block}>
@@ -78,9 +92,11 @@ const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLogg
                             id="password"
                             className={`${style.login_input} ${formik.touched.password && formik.errors.password ? style.login_input_error : ''}`}
                             type={'password'}
+                            placeholder={'free'}
                             {...formik.getFieldProps('password')}
                         />
-                        {formik.touched.password && formik.errors.password ? <div className={style.login_error}>{formik.errors.password}</div> : null}
+                        {formik.touched.password && formik.errors.password ?
+                            <div className={style.login_error}>{formik.errors.password}</div> : null}
                     </div>
 
 

@@ -307,6 +307,11 @@ body {
   font-size: 14px;
   font-weight: 900;
   cursor: pointer;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 0 7px 0 $bgLight;
+  }
 }
 
 .btn_todolist + .btn_todolist {
@@ -433,6 +438,28 @@ body {
     transform: translate(-50%, -50%);
     z-index: 5;
     background-color: $login;
+  }
+
+  //login_info
+  &_info {
+    text-align: center;
+    color: $dark800;
+
+    //login_info_data
+    &_data {
+      text-align: left;
+      display: flex;
+    }
+
+    //.login_info_span
+    &_span {
+      width: 100px;
+    }
+
+    //login_info_box
+    &_box {
+      margin-top: 10px;
+    }
   }
 }
 

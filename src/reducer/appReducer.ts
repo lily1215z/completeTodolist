@@ -58,7 +58,7 @@ export const getLoginNameAC = (login: string) => {
 export const initializeAppTC = () => async (dispatch: Dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))  //покажет крутилку
-        let res = await authAPI.me()
+        const res = await authAPI.me()
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true))
             dispatch(getLoginNameAC(res.data.data.login))
