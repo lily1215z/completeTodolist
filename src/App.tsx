@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux';
 import {AppRootState} from './redux/store';
 import {useAppDispatch} from './hooks';
 import {initializeAppTC, RequestStatusType} from './reducer/appReducer';
-import LinearProgress from '@mui/material/LinearProgress';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
 import {Navigate, Route, Routes} from 'react-router-dom';
@@ -12,6 +11,7 @@ import {Login} from './components/Login';
 import {TodolistMain} from './components/TodolistMain';
 import {LoaderMain} from './components/LoaderMain';
 import {NotFound} from './components/404';
+import {ProgressLine} from './components/ProgressLine';
 
 type PropsType = {
     demo?: boolean
@@ -46,9 +46,10 @@ function App({demo = false}: PropsType) {
 
     return (
         <>
-            {status === 'loading' && <div className={style.progress}><LinearProgress color="primary"/></div>}
-            <div className={style.wrapper}>
+            {/*{status === 'loading' && <div className={style.progress}><LinearProgress color="primary"/></div>}*/}
+            {status === 'loading' && <ProgressLine />}
 
+            <div className={style.wrapper}>
                 <Header/>
 
                 <Routes>

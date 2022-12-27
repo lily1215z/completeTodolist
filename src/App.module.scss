@@ -327,12 +327,6 @@ body {
   text-align: center;
 }
 
-.progress {
-  position: relative;
-  top: 162px;
-}
-
-
 .nik_name,
 .logout {
   padding: 3px 5px;
@@ -533,3 +527,28 @@ body {
   }
 }
 
+//styles for progressLine
+.progress_line {
+  position: absolute;
+  top: 162px;
+  width: 100%;
+  height: 5px;
+  animation: spin 3s ease infinite;
+  //background: linear-gradient(to right, $active 0%, #54c7f1 50%, $login 100%);
+}
+
+@keyframes spin {
+  0% {
+    //background-position: 100% 0;
+    background-color: $login;
+  }
+  50% {
+    //background-position: 0 0;
+    background-color: $bgBody;
+  }
+  100% {
+    //background-position: 0 0;
+    background-color: green;
+  }
+
+}

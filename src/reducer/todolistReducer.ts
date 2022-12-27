@@ -184,7 +184,7 @@ export const removeTodoListTC = (todoListId: string): AppThunk => async (dispatc
     try {
         dispatch(setAppStatusAC('loading'))
         dispatch(disabledOneTodolistAC(todoListId, 'loading'))
-        const res = await todolistAPI.removeTodolist(todoListId)
+        await todolistAPI.removeTodolist(todoListId)
         dispatch(removeTodoListAC(todoListId))
         dispatch(setAppStatusAC('sucssesed'))
     } catch (e) {
