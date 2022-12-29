@@ -34,9 +34,6 @@ export enum TaskPriorities {
 }
 
 export type TaskType = {
-    // id: string,
-    // title: string,
-    // isDone: boolean
     description: string
     title: string
     status: TaskStatuses
@@ -58,7 +55,6 @@ export const TodolistMain = ({demo = false}) => {
     const tasks = useSelector<AppRootState, TasksType>(state => state.tasks)
     const todolist = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists)
 
-// const dispatch = useDispatch();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -130,9 +126,7 @@ export const TodolistMain = ({demo = false}) => {
                             return <TodoList
                                 key={i.id}
                                 todolist={i}
-                                // todoListId={i.id}
                                 tasks={tasksForTodoList}
-                                // todoListTitle={i.title}
                                 removeTask={removeTask}
                                 addTask={addTask}
                                 changeFilter={changeFilter}

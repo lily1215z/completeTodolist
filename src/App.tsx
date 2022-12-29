@@ -18,20 +18,6 @@ type PropsType = {
 }
 
 function App({demo = false}: PropsType) {
-    //const todoListId1 = v1();
-    // const [todolist, setTodoList] = useState<Array<TodoListType>>([
-    //     {id: todoListId1, title: 'Daily affairs', filter: 'all'},
-    //     {id: todoListId2, title: 'My deals on camp', filter: 'all'},
-    // ])
-
-    //  const [tasks, setTasks] = useState<TasksType>({
-    //         [todoListId1]: [
-    //             {id: v1(), title: 'wash up', isDone: false},
-    //             {id: v1(), title: 'brush your teeth', isDone: true}
-    //         ]
-    //     }
-    // )
-
     const status = useSelector<AppRootState, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootState, boolean>(state => state.app.isInitialized)
     const dispatch = useAppDispatch();
