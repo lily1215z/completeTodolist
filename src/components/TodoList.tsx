@@ -3,14 +3,10 @@ import {Task} from './Task';
 import {UniversalInput} from './UniversalInput';
 import style from '../App.module.scss'
 import {EditableItem} from './EditableItem';
-import {useAppDispatch} from '../hooks';
-import {TodolistDomainType} from '../reducer/todolistReducer';
-import {TaskStatuses, TaskType, TodoListFilterType} from './TodolistMain';
+import {TaskStatuses, TaskType, TodolistDomainType, TodoListFilterType} from '../common/types/Types';
 
 type TodoListPropsType = {
-    // todoListId: string
     tasks: Array<TaskType>
-    // todoListTitle: string
     removeTask: (taskId: string, todoListId: string) => void
     addTask: (todoListId: string, title: string) => void
     changeFilter: (todoListId: string, filter: TodoListFilterType) => void
@@ -34,7 +30,6 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
                                                                      changeTodoListTitle,
                                                                      changeTaskTitle
                                                                  }) => {
-    // const dispatch = useAppDispatch();
 
     const addTaskValue = useCallback((title: string) => {
         addTask(todolist.id, title)
@@ -68,7 +63,6 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
                 titleInState={todolist.title}
                 styleTitle={styleForTodolistTitle}
             />
-            {/*<h2 className={style.title_todolist}>{todoListTitle}</h2>*/}
 
             <button className={style.btn_close} disabled={todolist.entityStatus === 'loading'} onClick={() => removeTodoList(todolist.id)}>x</button>
             <div className={style.card_inputbox}>
@@ -81,19 +75,19 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
 
             <ul className={style.card_map}>
                 {
-                    tasks.map(i => {
+                    tasks.map(task => {
                         const changeTaskTitleHandler = (newValue: string) => {
-                            changeTaskTitle(todolist.id, i.id, newValue)
+                            changeTaskTitle(todolist.id, task.id, newValue)
                         }
 
                         return <Task
-                            key={i.id}
+                            key={task.id}
                             todoListId={todolist.id}
                             removeTask={removeTask}
                             changeStatusTask={changeStatusTask}
-                            taskId={i.id}
-                            check={i.status}
-                            title={i.title}
+                            taskId={task.id}
+                            check={task.status}
+                            title={task.title}
                             changeTaskTitle={changeTaskTitleHandler}
                             entityStatus={todolist.entityStatus}
                         />

@@ -3,8 +3,8 @@ import {authAPI} from '../api/todolist-api';
 import {setIsLoggedInAC} from './authReducer';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 import axios from 'axios';
-
-export type RequestStatusType = 'idle' | 'loading' | 'sucssesed' | 'failed';
+import {RESULT_CODE_RESPONSE} from '../common/enums/Server_response_code';
+import {RequestStatusType} from '../common/types/Types';
 
 const initState = {
     status: 'loading' as RequestStatusType,
@@ -59,7 +59,7 @@ export const initializeAppTC = () => async (dispatch: Dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))  //покажет крутилку
         const res = await authAPI.me()
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === RESULT_CODE_RESPONSE.SUCCESS) {
             dispatch(setIsLoggedInAC(true))
             dispatch(getLoginNameAC(res.data.data.login))
         } else {

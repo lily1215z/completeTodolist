@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+In this project was use next technologies: React, Redux, Axios, TypeScripte, React-router dom, formik. 
+
 ## Available Scripts
 
 In the project directory, you can run:

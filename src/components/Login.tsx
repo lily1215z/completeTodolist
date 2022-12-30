@@ -2,11 +2,11 @@ import React from 'react';
 import style from '../App.module.scss'
 import {useFormik} from 'formik';
 import {loginTC} from '../reducer/authReducer';
-import {useAppDispatch} from '../hooks';
+import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {Particle} from './Particle';
-import {useSelector} from 'react-redux';
-import {AppRootState} from '../redux/store';
 import {Navigate} from 'react-router-dom';
+import {Path} from '../common/enums/Path';
+import {selectIsLoggedIn} from '../redux/selectors/selectorsAuth';
 
 interface FormikErrorType {
     email?: string
@@ -15,8 +15,7 @@ interface FormikErrorType {
 }
 
 export const Login: React.FC<{}> = () => {
-    const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn);
-
+    const isLoggedIn = useAppSelector(selectIsLoggedIn);
     const dispatch = useAppDispatch();
 
     const formik = useFormik({
@@ -43,33 +42,46 @@ export const Login: React.FC<{}> = () => {
             password: '',
             rememberMe: false,
         },
-        onSubmit: (values) => {
+
+        onSubmit: (values, {resetForm}) => {
             // alert(JSON.stringify(values, null, 2));
             dispatch(loginTC(values))
-            formik.resetForm()
+            // formik.resetForm()
+            resetForm()
         },
     });
 
     if (isLoggedIn) {
-        return <Navigate to={'/'}/>
+        // return <Navigate to={'/'}/>
+        return <Navigate to={Path.HOME}/>
     }
+
+    const validationCheck = (value: string) =>
+        // @ts-ignore
+      formik.touched[value] && formik.errors[value] ?
+          (<div className={style.login_error}>{formik.errors.email}</div>) : null
+
 
     return (
         <div className={style.login_wrapper}>
+
             <Particle/>
+
             <div className={style.login_block}>
                 <div className={style.login_info}>
                     Please enter this email and password:
                     <div className={style.login_info_box}>
                         <div className={style.login_info_data}>
-                            <div className={style.login_info_span}>Email:</div> <span>free@samuraijs.com</span>
+                            <div className={style.login_info_span}>Email:</div>
+                            <span>free@samuraijs.com</span>
                         </div>
                         <div className={style.login_info_data}>
-                            <div className={style.login_info_span}>Password:</div> <span>free</span>
+                            <div className={style.login_info_span}>Password:</div>
+                            <span>free</span>
                         </div>
                     </div>
-
                 </div>
+
                 <h2 className={style.login_formtitle}>Enter in my Todolist</h2>
 
                 <form onSubmit={formik.handleSubmit}>
@@ -82,8 +94,9 @@ export const Login: React.FC<{}> = () => {
                             placeholder={'free@samuraijs.com'}
                             {...formik.getFieldProps('email')}
                         />
-                        {formik.touched.email && formik.errors.email ?
-                            <div className={style.login_error}>{formik.errors.email}</div> : null}
+                        {validationCheck('email')}
+                        {/*{formik.touched.email && formik.errors.email ?*/}
+                        {/*    <div className={style.login_error}>{formik.errors.email}</div> : null}*/}
                     </div>
 
                     <div className={style.login_input_block}>
@@ -95,8 +108,9 @@ export const Login: React.FC<{}> = () => {
                             placeholder={'free'}
                             {...formik.getFieldProps('password')}
                         />
-                        {formik.touched.password && formik.errors.password ?
-                            <div className={style.login_error}>{formik.errors.password}</div> : null}
+                        {validationCheck('password')}
+                        {/*{formik.touched.password && formik.errors.password ?*/}
+                        {/*    <div className={style.login_error}>{formik.errors.password}</div> : null}*/}
                     </div>
 
 
@@ -114,12 +128,9 @@ export const Login: React.FC<{}> = () => {
                     <div className={style.btn_block}>
                         <button className={style.btn_todolist} type="submit">LOGIN</button>
                     </div>
-
                 </form>
             </div>
-
         </div>
-
     );
 };
 

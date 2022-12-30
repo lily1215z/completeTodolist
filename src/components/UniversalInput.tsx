@@ -1,13 +1,13 @@
 import React, {ChangeEvent, useState} from 'react';
-import style from '../App.module.scss'
-import {RequestStatusType} from '../reducer/appReducer';
+import style from '../App.module.scss';
+import {RequestStatusType} from '../common/types/Types';
 
-type UniversalInputType = {
+type UniversalInputPropsType = {
     addItem: (title: string) => void
     placeholder: string
     entityStatus?: RequestStatusType
 }
-export const UniversalInput:React.FC<UniversalInputType> = ({addItem, placeholder, entityStatus}) => {
+export const UniversalInput:React.FC<UniversalInputPropsType> = ({addItem, placeholder, entityStatus}) => {
     const [value, setValue] = useState('');
     const [error, setError] = useState(false);
 

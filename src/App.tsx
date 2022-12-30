@@ -1,25 +1,26 @@
 import React, {useEffect} from 'react';
 import style from './App.module.scss'
-import {useSelector} from 'react-redux';
-import {AppRootState} from './redux/store';
-import {useAppDispatch} from './hooks';
-import {initializeAppTC, RequestStatusType} from './reducer/appReducer';
+import {useAppDispatch, useAppSelector} from './hooks/hooks';
+import {initializeAppTC} from './reducer/appReducer';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from './components/Login';
 import {TodolistMain} from './components/TodolistMain';
 import {LoaderMain} from './components/LoaderMain';
-import {NotFound} from './components/404';
 import {ProgressLine} from './components/ProgressLine';
+import {Path} from './common/enums/Path';
+import {PageNotFound} from './components/PageNotFound';
+import {selectIsInitial, selectStatus} from './redux/selectors/selectorsApp';
 
 type PropsType = {
     demo?: boolean
 }
 
 function App({demo = false}: PropsType) {
-    const status = useSelector<AppRootState, RequestStatusType>(state => state.app.status)
-    const isInitialized = useSelector<AppRootState, boolean>(state => state.app.isInitialized)
+    const isInitialized = useAppSelector(selectIsInitial)
+    const status = useAppSelector(selectStatus)
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -27,23 +28,26 @@ function App({demo = false}: PropsType) {
     }, [])
 
     if (!isInitialized) {
-        return <LoaderMain />
+        return <LoaderMain/>
     }
+
+    const ROUTES = [
+        {path: Path.LOGIN, element: <Login/>},
+        {path: Path.ERROR_404, element: <PageNotFound/>},
+        {path: Path.HOME, element: <TodolistMain demo={demo}/>},
+        {path: Path.OTHER, element: <Navigate to={Path.ERROR_404}/>},
+    ]
 
     return (
         <>
             {/*{status === 'loading' && <div className={style.progress}><LinearProgress color="primary"/></div>}*/}
-            {status === 'loading' && <ProgressLine />}
+            {status === 'loading' && <ProgressLine/>}
 
             <div className={style.wrapper}>
                 <Header/>
 
                 <Routes>
-                    <Route path={'/'} element={<TodolistMain demo={demo}/>}/>
-                    <Route path={'/login'} element={<Login/>}/>
-
-                    <Route path="404" element={<NotFound />}/>
-                    <Route path="*" element={<Navigate to="404"/>}/>
+                    {ROUTES.map(({path, element}) => <Route key={path} path={path} element={element}/>)}
                 </Routes>
 
                 <Footer/>
@@ -56,3 +60,4 @@ function App({demo = false}: PropsType) {
 }
 
 export default App;
+

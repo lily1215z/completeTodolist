@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import style from "../App.module.scss";
 
 type todoListTitleType = {
-    titleInState: string        //значение кот уже изменилось в стейте
-    addItem: (newTitle: string) => void   //ф-я редактирования текста
-    styleTitle: any              // стили
+    titleInState: string        //value that change in state
+    addItem: (newTitle: string) => void   //function for edit text
+    styleTitle: any              // styles
 }
 
 export const EditableItem: React.FC<todoListTitleType> =  React.memo(({ titleInState, addItem, styleTitle}) => {

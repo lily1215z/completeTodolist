@@ -1,11 +1,12 @@
-import {todolistAPI, TodolistType} from '../api/todolist-api';
+import {todolistAPI} from '../api/todolist-api';
 import {Dispatch} from 'redux';
 import {AppThunk} from '../redux/store';
-import {RequestStatusType, setAppStatusAC} from './appReducer';
+import {setAppStatusAC} from './appReducer';
 import axios from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
-import {TodoListFilterType} from '../components/TodolistMain';
 import {fetchTasksTC} from './tasksReducer';
+import {RequestStatusType, TodolistDomainType, TodoListFilterType, TodolistType} from '../common/types/Types';
+import {RESULT_CODE_RESPONSE} from '../common/enums/Server_response_code';
 
 const initState: Array<TodolistDomainType> = []
 
@@ -89,7 +90,7 @@ export const addTodoListTC = (title: string): AppThunk => async (dispatch: Dispa
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await todolistAPI.createTodolist(title)
-        if (res.data.resultCode === 0) {  //0 - this is victory
+        if (res.data.resultCode === RESULT_CODE_RESPONSE.SUCCESS) {  //0 - this is victory
             dispatch(addTodoListAC(res.data.data.item))
             dispatch(setAppStatusAC('sucssesed'))
         } else {
@@ -138,9 +139,9 @@ export type TodolistActionsType = ReturnType<typeof removeTodoListAC>
     | ReturnType<typeof setTodoAC>
     | ReturnType<typeof disabledOneTodolistAC>
 
-export type FilterValuesType = 'all' | 'active' | 'completed';
+// export type FilterValuesType = 'all' | 'active' | 'completed';
 
-export type TodolistDomainType = TodolistType & {
-    filter: FilterValuesType
-    entityStatus: RequestStatusType
-}
+// export type TodolistDomainType = TodolistType & {
+//     filter: FilterValuesType
+//     entityStatus: RequestStatusType
+// }

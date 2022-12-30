@@ -1,9 +1,11 @@
 import {Dispatch} from 'redux';
-import {authAPI, LoginParamsType} from '../api/todolist-api';
+import {authAPI} from '../api/todolist-api';
 import {AppThunk} from '../redux/store';
 import {setAppStatusAC} from './appReducer';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 import axios from 'axios';
+import {LoginParamsType} from '../common/types/Types';
+import {RESULT_CODE_RESPONSE} from '../common/enums/Server_response_code';
 
 
 const initialState = {
@@ -35,7 +37,7 @@ export const loginTC = (dataLoginForm: LoginParamsType): AppThunk => async (disp
     try {
         dispatch(setAppStatusAC('loading'))  //покажет крутилку
         const res = await authAPI.login(dataLoginForm)
-        if(res.data.resultCode === 0) {
+        if(res.data.resultCode === RESULT_CODE_RESPONSE.SUCCESS) {
             dispatch(setIsLoggedInAC(true))
             dispatch(setAppStatusAC('sucssesed'))  //уберет крутилку
         }
@@ -54,7 +56,7 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))  //покажет крутилку
         const res = await authAPI.logout()
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === RESULT_CODE_RESPONSE.SUCCESS) {
             dispatch(setIsLoggedInAC(false))
             dispatch(setAppStatusAC('sucssesed'))  //уберет крутилку
         } else {

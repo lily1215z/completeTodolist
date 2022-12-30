@@ -1,11 +1,12 @@
 import {addTodoListAC, disabledOneTodolistAC, removeTodoListAC, setTodoAC} from './todolistReducer';
 import {Dispatch} from 'redux';
-import {todolistAPI, UpdateTaskModelType} from '../api/todolist-api';
+import {todolistAPI} from '../api/todolist-api';
 import {AppRootState, AppThunk} from '../redux/store';
 import {setAppStatusAC} from './appReducer';
 import axios from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
-import {TaskPriorities, TaskStatuses, TasksType, TaskType} from '../components/TodolistMain';
+import {TaskPriorities, TaskStatuses, TasksType, TaskType, UpdateTaskModelType} from '../common/types/Types';
+import {RESULT_CODE_RESPONSE} from '../common/enums/Server_response_code';
 
 const initState: TasksType = {}
 
@@ -51,9 +52,9 @@ export const removeTasksAC = (todolistId: string, taskId: string) =>
     ({type: 'REMOVE_TASK', todolistId, taskId} as const)
 export const addTasksAC = (todolistId: string, task: TaskType) =>
     ({type: 'ADD_TASK', todolistId, task} as const)
-export const updateTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todolistId: string): UpdateTaskActionType =>
+export const updateTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todolistId: string) =>
     ({type: 'UPDATE-TASK', model, todolistId, taskId} as const)
-export const setTasksAC = (tasks: Array<TaskType>, todolistId: string): SetTasksActionType =>
+export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
     ({type: 'SET-TASKS', tasks, todolistId} as const)
 
 //thunks
@@ -95,7 +96,7 @@ export const addTasksTC = (todolistId: string, title: string): AppThunk => async
         dispatch(setAppStatusAC('loading'))  // show loader
         dispatch(disabledOneTodolistAC(todolistId, 'loading'))
         const res = await todolistAPI.createTask(todolistId, title)
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === RESULT_CODE_RESPONSE.SUCCESS) {
             dispatch(addTasksAC(todolistId, res.data.data.item))
             dispatch(setAppStatusAC('sucssesed'))       //remove loader
             dispatch(disabledOneTodolistAC(todolistId, 'sucssesed'))
@@ -145,13 +146,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
 }
 
 //type
-export type SetTasksActionType = {
-    type: 'SET-TASKS'
-    tasks: Array<TaskType>
-    todolistId: string
-}
-
-export type UpdateDomainTaskModelType = {
+type UpdateDomainTaskModelType = {
     title?: string
     description?: string
     status?: TaskStatuses
@@ -160,16 +155,10 @@ export type UpdateDomainTaskModelType = {
     deadline?: string
 }
 
-export type UpdateTaskActionType = {
-    type: 'UPDATE-TASK', //change name to the main title
-    todolistId: string
-    taskId: string
-    model: UpdateDomainTaskModelType
-}
 export type TasksActionsType = ReturnType<typeof removeTasksAC>
     | ReturnType<typeof addTasksAC>
     | ReturnType<typeof addTodoListAC>
     | ReturnType<typeof removeTodoListAC>
-    | SetTasksActionType
+    | ReturnType<typeof setTasksAC>
     | ReturnType<typeof setTodoAC>
     | ReturnType<typeof updateTaskAC>

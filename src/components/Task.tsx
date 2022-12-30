@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import style from '../App.module.scss'
 import {EditableItem} from './EditableItem';
-import {RequestStatusType} from '../reducer/appReducer';
-import {TaskStatuses} from './TodolistMain';
+import {RequestStatusType, TaskStatuses} from '../common/types/Types';
 
-type TaskType = {
+
+type TaskPropsType = {
     todoListId: string
     removeTask: (taskId: string, todoListId: string) => void
     taskId: string,
@@ -15,7 +15,7 @@ type TaskType = {
     entityStatus?: RequestStatusType
 }
 
-export const Task: React.FC<TaskType> = React.memo(({
+export const Task: React.FC<TaskPropsType> = React.memo(({
                                                         todoListId,
                                                         removeTask,
                                                         taskId,

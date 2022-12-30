@@ -1,13 +1,12 @@
 import React from 'react';
 import style from '../App.module.scss';
 import {logoutTC} from '../reducer/authReducer';
-import {useAppDispatch} from '../hooks';
-import {useSelector} from 'react-redux';
-import {AppRootState} from '../redux/store';
+import {useAppDispatch, useAppSelector} from '../hooks/hooks';
+import {selectIsInitial, selectLogin} from '../redux/selectors/selectorsApp';
 
 export const Header = () => {
-    const isInitial = useSelector<AppRootState, boolean>(state => state.app.isInitialized);
-    const login = useSelector<AppRootState, string >(state => state.app.login)
+    const isInitial = useAppSelector(selectIsInitial);
+    const login = useAppSelector(selectLogin)
 
     const dispatch = useAppDispatch();
 
