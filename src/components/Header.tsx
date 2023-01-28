@@ -1,8 +1,8 @@
 import React from 'react';
 import style from '../App.module.scss';
-import {logoutTC} from '../reducer/authReducer';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {selectIsInitial, selectLogin} from '../redux/selectors/selectorsApp';
+import {logoutTC} from '../redux/middlewares/thunkAuth';
 
 export const Header = () => {
     const isInitial = useAppSelector(selectIsInitial);

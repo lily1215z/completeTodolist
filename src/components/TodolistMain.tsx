@@ -3,20 +3,16 @@ import style from '../App.module.scss';
 import {UniversalInput} from './UniversalInput';
 import {TodoList} from './TodoList';
 import {ErrorSnackbar} from './ЕrrorSnackbar';
-import {
-    addTodoListTC,
-    changeFilterAC,
-    changeTodolistTitleTC, getTodoTC,
-    removeTodoListTC,
-} from '../reducer/todolistReducer';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
-import {addTasksTC, removeTasksTC, updateTaskTC} from '../reducer/tasksReducer';
 import {Navigate} from 'react-router-dom';
 import {Path} from '../common/enums/Path';
 import {TaskStatuses, TodoListFilterType} from '../common/types/Types';
 import {selectIsLoggedIn} from '../redux/selectors/selectorsAuth';
 import {selectTasks} from '../redux/selectors/selectorsTasks';
 import {selectTodolists} from '../redux/selectors/selectorsTodolist';
+import {addTodoListTC, changeTodolistTitleTC, getTodoTC, removeTodoListTC} from '../redux/middlewares/thunkTodolists';
+import {addTasksTC, removeTasksTC, updateTaskTC} from '../redux/middlewares/thunkTasks';
+import {changeFilterAC} from '../redux/actions/actionTodolists';
 
 
 export const TodolistMain = ({demo = false}) => {
@@ -28,7 +24,7 @@ export const TodolistMain = ({demo = false}) => {
 
     useEffect(() => {
         dispatch(getTodoTC())
-    }, [])
+    }, [dispatch])
 
     const removeTask = useCallback(function (todolistId: string, taskId: string) {
         dispatch(removeTasksTC(todolistId, taskId));
@@ -63,7 +59,6 @@ export const TodolistMain = ({demo = false}) => {
     }, [dispatch])
 
     if(!isLoggedIn) {
-        // return <Navigate to={'/login'} />
         return <Navigate to={Path.LOGIN}/>
     }
 
@@ -73,6 +68,7 @@ export const TodolistMain = ({demo = false}) => {
                 <div className={style.plan_add}>
                     <h2 className={style.plan_title}>My plans</h2>
                     <div className={style.plan_img}>
+
                         <UniversalInput
                             placeholder={'write the name of your list'}
                             addItem={addTodoList}
@@ -80,6 +76,7 @@ export const TodolistMain = ({demo = false}) => {
                     </div>
 
                 </div>
+
                 <div className={style.card_box}>
                     {
                         todolist.map(i => {
@@ -93,6 +90,7 @@ export const TodolistMain = ({demo = false}) => {
                             if (i.filter === 'completed') {
                                 tasksForTodoList = allTasksTodoLists.filter(i => i.status === 2)
                             }
+
                             return <TodoList
                                 key={i.id}
                                 todolist={i}

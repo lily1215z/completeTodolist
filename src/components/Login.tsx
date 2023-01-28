@@ -1,12 +1,12 @@
 import React from 'react';
 import style from '../App.module.scss'
 import {useFormik} from 'formik';
-import {loginTC} from '../reducer/authReducer';
 import {useAppDispatch, useAppSelector} from '../hooks/hooks';
 import {Particle} from './Particle';
 import {Navigate} from 'react-router-dom';
 import {Path} from '../common/enums/Path';
 import {selectIsLoggedIn} from '../redux/selectors/selectorsAuth';
+import {loginTC} from '../redux/middlewares/thunkAuth';
 
 interface FormikErrorType {
     email?: string

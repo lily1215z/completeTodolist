@@ -1,7 +1,7 @@
 // generic function
-import {AppReducerActionType, setAppErrorAC, setAppStatusAC} from '../reducer/appReducer';
 import {ResponseType} from '../common/types/Types';
 import {Dispatch} from 'redux';
+import {AppReducerActionType, setAppErrorAC, setAppStatusAC} from '../redux/actions/actionApp';
 
 export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch<AppReducerActionType>) => {
     if (data.messages.length) {
