@@ -27,3 +27,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<void, AppRootState, unknow
 
 //@ts-ignore
 window.store = store
+
+//нужен тест чтоб посмотреть комитит или нет обновленный Шторм.
