@@ -5,7 +5,10 @@ import {handleServerAppError, handleServerNetworkError} from '../../utils/error-
 import axios from 'axios';
 import {AppRootState, AppThunk} from '../store';
 import {RESULT_CODE_RESPONSE} from '../../common/enums/Server_response_code';
-import {UpdateDomainTaskModelType, UpdateTaskModelType} from '../../common/types/Types';
+import {
+    UpdateDomainTaskModelType,
+    UpdateTaskModelType
+} from '../../common/types/Types';
 import {addTasksAC, removeTasksAC, setTasksAC, updateTaskAC} from '../actions/actionsTasks';
 import {disabledOneTodolistAC} from '../actions/actionTodolists';
 
@@ -61,11 +64,13 @@ export const addTasksTC = (todolistId: string, title: string): AppThunk => async
     }
 }
 
+
 export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType): AppThunk => {
     return async (dispatch, getState: () => AppRootState) => {
         try {
             const state = getState()
             const task = state.tasks[todolistId].find(i => i.id === taskId)
+            console.log(task)
             if (!task) {
                 console.warn('task not found in the state')
                 return

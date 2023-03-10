@@ -176,6 +176,7 @@ body {
   display: flex;
   margin-bottom: 20px;
   position: relative;
+
   @media screen and (max-width: 470px) {
     justify-content: flex-end;
   }
@@ -240,22 +241,24 @@ body {
 
 .item_input {
   &:before {
+    //активная свинка
     @include after($pig, -9px, -30px);
     //@include after($pig, -9px, -32px);
   }
 
   &:after {
-    //@include after($check, 4px, 3px);
+    //активная обводка нового чекбокса
     @include after($check, 4px, 4px);
-    background-color: $bgLight200;
+    background-color: $bgLight;
   }
 }
 
 .item_active {
   &:before {
+    //это  не активный поросенок
     @include after($pigActive, -9px, -30px);
   }
-
+ ///это ободок нового чекбокса
   &:after {
     @include after('', 4px, 4px);
     width: 17px;
@@ -287,6 +290,9 @@ body {
 
 .item_editbox {
   flex: 1;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  padding-right: 15px;
 }
 
 .card_map {

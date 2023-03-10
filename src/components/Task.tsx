@@ -42,13 +42,15 @@ export const Task: React.FC<TaskPropsType> = React.memo(({
         <>
             {
                 <li className={style.item}>
-                    <input
-                        disabled={disabled}
-                        checked={check === 2}
-                        type={'checkbox'}
-                        onChange={changeStatusTaskHandler}
-                        className={check === 2 ? `${style.item_input}` : `${style.item_active}`}
-                    />
+                    <div>
+                        <input
+                            disabled={disabled}
+                            checked={check === 2}
+                            type={'checkbox'}
+                            onChange={changeStatusTaskHandler}
+                            className={check === 2 ? `${style.item_input}` : `${style.item_active}`}
+                        />
+                    </div>
 
                     <div className={style.item_editbox}>
                         <EditableItem
@@ -59,7 +61,8 @@ export const Task: React.FC<TaskPropsType> = React.memo(({
                         {/*<span className={style.item_title}>{title}</span>*/}
                     </div>
 
-                    <button className={style.item_btn} onClick={() => removeTask(todoListId, taskId)}
+                    <button className={style.item_btn}
+                            onClick={() => removeTask(todoListId, taskId)}
                             disabled={disabled}></button>
                 </li>
             }

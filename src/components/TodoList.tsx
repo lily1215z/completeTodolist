@@ -46,7 +46,9 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
     const styleForTodolistTitle = {
         fontFamily: '\'Ruslan Display\', cursive',
         margin: 0,
-        fontSize: '24px'
+        fontSize: '24px',
+        overflow: 'hidden',
+        overflowWrap: 'break-word',
     }
     //
     // useEffect(() => {
