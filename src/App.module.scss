@@ -243,13 +243,13 @@ body {
   &:before {
     //активная свинка
     @include after($pig, -9px, -30px);
-    //@include after($pig, -9px, -32px);
   }
 
   &:after {
     //активная обводка нового чекбокса
     @include after($check, 4px, 4px);
     background-color: $bgLight;
+    cursor: pointer;
   }
 }
 
@@ -266,6 +266,7 @@ body {
     border: 2px solid $active;
     border-radius: 3px;
     background-color: $bgLight;
+    cursor: pointer;
   }
 }
 
