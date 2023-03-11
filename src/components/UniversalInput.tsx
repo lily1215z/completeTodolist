@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import style from '../App.module.scss';
 import {RequestStatusType} from '../common/types/Types';
+import { KeyboardEvent } from 'react';
 
 type UniversalInputPropsType = {
     addItem: (title: string) => void
@@ -25,7 +26,7 @@ export const UniversalInput:React.FC<UniversalInputPropsType> = ({addItem, place
         setValue(e.currentTarget.value)
         setError(false)
     }
-    // @ts-ignore
+
     const onPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode  === 13) {
             addItemHandler()
@@ -42,7 +43,9 @@ export const UniversalInput:React.FC<UniversalInputPropsType> = ({addItem, place
                     className={`${style.input} ${error ? style.error_input : ''}`}
                     onKeyPress={onPressEnter}
                 />
+
             <button className={style.btn_add} onClick={addItemHandler} disabled={check}>add</button>
+
            <div className={style.error}>{error ? 'write something :)' : ''}</div>
         </div>
     );

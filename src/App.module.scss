@@ -124,7 +124,7 @@ body {
 .card {
   @include width(300px);
   margin-top: 30px;
-  box-shadow: 2px 2px 14px 3px $boxShadow;
+  box-shadow: 2px 2px 8px 0 $boxShadow;
   border-radius: 5px;
   position: relative;
   display: flex;
@@ -146,9 +146,8 @@ body {
   padding: 7px 5px;
   outline: transparent;
   border: 1px solid transparent;
-  //background-color: transparent;
   border-radius: 3px;
-  box-shadow: 2px 2px 14px 3px $boxShadow;
+  box-shadow: 0 0 5px 0 $boxShadow;
   margin-right: 15px;
   position: relative;
   z-index: 1;
@@ -202,7 +201,7 @@ body {
   cursor: pointer;
   font-size: 15px;
   font-weight: 900;
-  box-shadow: 0 0 14px 3px $boxShadow;
+  box-shadow: 0 0 5px 0 $boxShadow;
   border-radius: 3px;
   display: block;
 }
@@ -241,7 +240,6 @@ body {
 
 .item_input {
   &:before {
-    //активная свинка
     @include after($pig, -9px, -30px);
   }
 
@@ -255,7 +253,6 @@ body {
 
 .item_active {
   &:before {
-    //это  не активный поросенок
     @include after($pigActive, -9px, -30px);
   }
  ///это ободок нового чекбокса
@@ -338,7 +335,7 @@ body {
 .logout {
   padding: 3px 5px;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .nik_name {

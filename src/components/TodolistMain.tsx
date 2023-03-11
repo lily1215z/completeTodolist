@@ -15,7 +15,7 @@ import {addTasksTC, removeTasksTC, updateTaskTC} from '../redux/middlewares/thun
 import {changeFilterAC} from '../redux/actions/actionTodolists';
 
 
-export const TodolistMain = ({demo = false}) => {
+export const TodolistMain = () => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
     const tasks = useAppSelector(selectTasks)
     const todolist = useAppSelector(selectTodolists)
@@ -102,7 +102,6 @@ export const TodolistMain = ({demo = false}) => {
                                 removeTodoList={removeTodoList}
                                 changeTodoListTitle={changeTodoListTitle}
                                 changeTaskTitle={changeTaskTitle}
-                                demo={demo}
                             />
                         })
                     }

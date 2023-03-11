@@ -13,11 +13,7 @@ import {selectIsInitial, selectStatus} from './redux/selectors/selectorsApp';
 import {initializeAppTC} from './redux/middlewares/thunkInitialize';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 
-type PropsType = {
-    demo?: boolean
-}
-
-function App({demo = false}: PropsType) {
+function App() {
     const isInitialized = useAppSelector(selectIsInitial)
     const status = useAppSelector(selectStatus)
 
@@ -34,7 +30,7 @@ function App({demo = false}: PropsType) {
     const ROUTES = [
         {path: Path.LOGIN, element: <Login/>},
         {path: Path.ERROR_404, element: <PageNotFound/>},
-        {path: Path.HOME, element: <TodolistMain demo={demo}/>},
+        {path: Path.HOME, element: <TodolistMain />},
         {path: Path.OTHER, element: <Navigate to={Path.ERROR_404}/>},
     ]
 

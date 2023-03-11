@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import style from "../App.module.scss";
+import {KeyboardEvent} from 'react';
 
 type todoListTitleType = {
-    titleInState: string        //value that change in state
-    addItem: (newTitle: string) => void   //function for edit text
-    styleTitle: any              // styles
+    titleInState: string
+    addItem: (newTitle: string) => void
+    styleTitle: any
 }
 
 export const EditableItem: React.FC<todoListTitleType> =  React.memo(({ titleInState, addItem, styleTitle}) => {
@@ -17,7 +18,7 @@ export const EditableItem: React.FC<todoListTitleType> =  React.memo(({ titleInS
         addItem(value)
     }
 
-    const onPressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const onPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode  === 13) {
             setEdit(false)
             addItem(value)
@@ -26,7 +27,6 @@ export const EditableItem: React.FC<todoListTitleType> =  React.memo(({ titleInS
 
     return (
         <>
-            {/*<h2 className={style.title_todolist}>{editItem}</h2>*/}
             {
                 edit
                     ?

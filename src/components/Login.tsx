@@ -14,7 +14,7 @@ interface FormikErrorType {
     rememberMe?: boolean
 }
 
-export const Login: React.FC<{}> = () => {
+export const Login = () => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
     const dispatch = useAppDispatch();
 
@@ -44,17 +44,15 @@ export const Login: React.FC<{}> = () => {
         },
 
         onSubmit: (values, {resetForm}) => {
-            // alert(JSON.stringify(values, null, 2));
             dispatch(loginTC(values))
-            // formik.resetForm()
             resetForm()
         },
     });
 
     if (isLoggedIn) {
-        // return <Navigate to={'/'}/>
         return <Navigate to={Path.HOME}/>
     }
+
 
     const validationCheck = (value: string) =>
         // @ts-ignore
@@ -95,8 +93,6 @@ export const Login: React.FC<{}> = () => {
                             {...formik.getFieldProps('email')}
                         />
                         {validationCheck('email')}
-                        {/*{formik.touched.email && formik.errors.email ?*/}
-                        {/*    <div className={style.login_error}>{formik.errors.email}</div> : null}*/}
                     </div>
 
                     <div className={style.login_input_block}>
@@ -109,8 +105,6 @@ export const Login: React.FC<{}> = () => {
                             {...formik.getFieldProps('password')}
                         />
                         {validationCheck('password')}
-                        {/*{formik.touched.password && formik.errors.password ?*/}
-                        {/*    <div className={style.login_error}>{formik.errors.password}</div> : null}*/}
                     </div>
 
 

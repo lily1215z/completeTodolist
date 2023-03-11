@@ -58,7 +58,6 @@ export const Task: React.FC<TaskPropsType> = React.memo(({
                             titleInState={title}
                             styleTitle={styleForTasksTitle}
                         />
-                        {/*<span className={style.item_title}>{title}</span>*/}
                     </div>
 
                     <button className={style.item_btn}

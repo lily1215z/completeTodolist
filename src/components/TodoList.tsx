@@ -15,11 +15,9 @@ type TodoListPropsType = {
     changeTodoListTitle: (title: string, todoListId: string) => void
     changeTaskTitle: (title: string, todoListId: string, taskId: string) => void
     todolist: TodolistDomainType
-    demo?: boolean
 }
 
 export const TodoList: React.FC<TodoListPropsType> = React.memo(({
-                                                                     demo = false,
                                                                      tasks,
                                                                      todolist,
                                                                      removeTask,
@@ -50,13 +48,6 @@ export const TodoList: React.FC<TodoListPropsType> = React.memo(({
         overflow: 'hidden',
         overflowWrap: 'break-word',
     }
-    //
-    // useEffect(() => {
-    //         // if (demo) {
-    //         //     return
-    //         // }
-    //     dispatch(fetchTasksTC(todolist.id))
-    // }, [])
 
     return (
         <div className={style.card}>
